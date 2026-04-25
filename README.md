@@ -97,7 +97,7 @@ Reads packages from an existing `packages.csv` instead of running the curation a
 
 **CSV format (`packages.csv`):**
 ```
-blocked_package_name,blocked_package_version,type
+package_name,package_version,type
 lodash,4.17.15,npm
 log4j,2.14.1,maven
 requests,2.25.1,pypi
