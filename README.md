@@ -10,7 +10,7 @@ This tool improves on the standard Curation Waiver workflow by giving teams a sc
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                         Two Input Modes                          │
+│                         Two Input Modes                         │
 │                                                                 │
 │  [Mode 1] jf ca (Curation Audit)    [Mode 2] packages.csv       │
 │             │                                │                  │
@@ -18,25 +18,25 @@ This tool improves on the standard Curation Waiver workflow by giving teams a sc
 │                            ▼                                    │
 │                  Generate GraphQL Mutation                      │
 │                            │                                    │
-│               ┌────────────▼─────────────┐                     │
-│               │   Label exists in        │                     │
-│               │   JFrog Catalog?         │                     │
-│               └──────┬───────────┬───────┘                     │
+│               ┌────────────▼─────────────┐                      │
+│               │   Label exists in        │                      │
+│               │   JFrog Catalog?         │                      │
+│               └──────┬───────────┬───────┘                      │
 │                    YES           NO                             │
 │                      │           │                              │
 │                      │      Create Label                        │
 │                      │           │                              │
-│                      └─────┬─────┘                             │
+│                      └─────┬─────┘                              │
 │                            ▼                                    │
 │             Assign Packages to Label via GraphQL                │
 │                            │                                    │
 │                            ▼                                    │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │         Add Label as Waiver in Curation Policy UI       │   │
-│  │                                                         │   │
-│  │  Curation → Policies → Edit Policy → Waivers           │   │
-│  │  ➕ Add waiver → Select Label → worksafe_new_label      │   │
-│  └─────────────────────────────────────────────────────────┘   │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │         Add Label as Waiver in Curation Policy UI       │    │
+│  │                                                         │    │
+│  │  Curation → Policies → Edit Policy → Waivers            │    │
+│  │  ➕ Add waiver → Select Label → worksafe_new_label      │    │
+│  └─────────────────────────────────────────────────────────┘    │
 │                            │                                    │
 │                            ▼                                    │
 │   ✅ Packages allowed through Curation Policy                   │
