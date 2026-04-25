@@ -1,8 +1,8 @@
-# JFrog Catalog Label Manager
+# JFrog Catalog Label & Curation Waiver Automation
 
-Automate the creation and assignment of **JFrog Catalog custom labels** to blocked packages identified by **JFrog Curation Audit** — or from your own package list.
+Automate the creation and assignment of **JFrog Catalog custom labels** to blocked packages identified by **JFrog Curation Audit** — or from your own package list — and use those labels as **waivers inside Curation Policies** to allow approved packages through at scale.
 
-This tool improves on the standard Curation Waiver workflow by giving teams a scriptable, repeatable way to tag blocked packages with custom catalog labels, without relying on the manual UI-based waiver approval flow.
+This tool improves on the standard Curation Waiver workflow by giving teams a scriptable, repeatable way to bulk-tag blocked packages with custom catalog labels. Once a label is created and packages are assigned to it, the label can be attached as a waiver to one or more Curation Policies directly from the JFrog Platform UI — allowing all packages under that label to bypass the policy block without requiring individual per-package waiver requests. This makes it ideal for teams managing large sets of approved-but-blocked packages across multiple policies and repositories.
 
 ---
 
@@ -137,6 +137,59 @@ Creates the custom catalog label via `createCustomCatalogLabel` mutation.
 ### Step 5 — Assign Packages
 
 Sends the generated `mutation.graphql` to the Catalog API to assign all packages and their versions to the label.
+
+---
+
+## Step 6 — Attach the Label to a Curation Policy Waiver
+
+Once the script has created the catalog label and assigned packages to it, the final step is to **add that label as a waiver** inside your Curation Policy. This tells JFrog Curation to allow the labeled packages through, even if they would otherwise be blocked by the policy.
+
+### How to add the label as a waiver in the UI
+
+1. Navigate to **Platform → Curation → Policies**
+2. Open the policy you want to apply the waiver to (e.g. `projectkey-critical-block`)
+3. Scroll to the **Waivers** section (Step 4 in the policy wizard)
+4. Click **➕ Add waiver**
+5. Select **Label** as the waiver type
+6. Search for and select the label you created (e.g. `worksafe_new_label`)
+7. Click **Next** and save the policy
+
+> The waiver will now allow all packages assigned to that label to pass through the Curation policy, without needing individual per-package waiver requests.
+
+### Example — Policy with label waiver attached
+
+```
+Edit Curation Policy
+├── ✅ Policy Name       projectkey-critical-block
+├── ✅ Scope             Specific repositories → bmc-docker-remote
+├── ✅ Policy Condition  Malicious package
+├── 4  Waivers
+│       This waiver contains the following labels/packages:
+│       1 Waived labels  →  worksafe_new_label
+│       [+ Add waiver]
+└── ✅ Actions & Notifications  Dry run
+```
+
+### End-to-End Flow
+
+```
+ jf ca / packages.csv
+         │
+         ▼
+  catalog_label.sh / .py
+         │
+         ├─── Creates label:        worksafe_new_label
+         ├─── Assigns packages:     lodash@4.17.15, log4j@2.14.1 ...
+         │
+         ▼
+  JFrog Catalog → Custom Labels → worksafe_new_label
+         │
+         ▼
+  Curation Policy → Waivers → Add waiver → worksafe_new_label
+         │
+         ▼
+  ✅ Blocked packages now allowed through for that policy
+```
 
 ---
 
