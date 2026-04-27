@@ -125,7 +125,7 @@ python3 catalog_label.py https://myorg.jfrog.io <token> my_label --from-file
 ```
 
 ---
-## From UI
+## Post label create Verification from UI
 <img width="1728" height="707" alt="image" src="https://github.com/user-attachments/assets/9680fee5-24f7-4ac4-81e3-9fe5b298d3d3" />
 
 
